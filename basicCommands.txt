@@ -9,3 +9,14 @@ uptime
 uname
 hostname
 bc
+
+cat
+grep
+rm
+touch
+cp
+mv
+cut
+head
+tail
+chmod
