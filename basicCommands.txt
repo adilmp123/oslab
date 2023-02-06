@@ -10,6 +10,7 @@ uname
 hostname
 bc
 
+FILE MANIPULATION COMMANDS
 cat
 grep
 rm
@@ -20,3 +21,9 @@ cut
 head
 tail
 chmod
+
+TEXT EDITOR COMMANDS
+ed
+ex
+vi
+EMACS
