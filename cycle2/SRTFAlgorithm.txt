@@ -1,0 +1,35 @@
+start
+create structure process with int arrival time, burst time, completion time, turn around time, waiting time, remaining time
+input no of processes (n) 
+create process array a[n]
+enter arrival time and burst time of n processes into a
+set remaining time as the burst time of the current process
+set completed=0,totalWT=0,totalTAT=0, currentTime=0
+while completed < n
+    set shortestJob=-1, shortestTime = 99999
+    for i=0 to n-1
+        if a[i].at <= currentTime AND a[i].rt <shortestTime AND a[i].rt >0
+            shortestJob=i 
+            shortestTime=a[i].rt 
+        Endif
+    Endfor
+    if shortestJob==-1
+        currentTime++A
+    else
+        a[shortestJob].rt-- 
+        currentTime++ 
+        if a[shortestJob].rt==0 
+            completed++
+            a[shortestJob].tat=currentTime-a[shortestJob].at
+            a[shortestJob].wt=a[shortestJob].tat-a[shortestJob].bt
+            totalTAT+=a[shortestJob].tat
+            totalWT+=a[shortestJob].wt
+        Endif
+    Endif
+Endwhile
+avgTAT = totalTAT / n 
+avgWT = totalWT / n 
+display process array and average waiting time and turn around time
+stop 
+
+
