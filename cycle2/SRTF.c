@@ -62,5 +62,5 @@ int main()
         printf("\nP%d\t%d\t%d\t%d\t%d\t%d",a[i].id,a[i].at,a[i].bt,a[i].ct,a[i].tat,a[i].wt);
     }
     printf("\nAverage Waiting Time = %f",avgWT);
-    printf("\nAverage Turn Around Time = %f",avgTAT);
+    printf("\nAverage Turn Around Time = %f\n",avgTAT);
 }
