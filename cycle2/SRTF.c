@@ -46,6 +46,7 @@ int main()
             if(a[shortestJob].rt==0)
             {
                 completed++;
+                a[shortestJob].ct=currentTime;
                 a[shortestJob].tat=currentTime-a[shortestJob].at;
                 a[shortestJob].wt=a[shortestJob].tat-a[shortestJob].bt;
                 totalTAT+=a[shortestJob].tat;
