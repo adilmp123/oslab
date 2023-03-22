@@ -1,102 +1,65 @@
 #include <stdio.h>
-#include <stdbool.h>
-
-#define MAX_PROCESSES 10
-
-struct Process
+typedef struct
 {
-    int pid;
-    int burst_time;
-    int priority;
-    int arrival_time;
-    int remaining_time;
-};
-
-void swap(struct Process *xp, struct Process *yp)
-{
-    struct Process temp = *xp;
-    *xp = *yp;
-    *yp = temp;
-}
-
-void sort_by_priority(struct Process processes[], int n)
-{
-    int i, j;
-    for (i = 0; i < n - 1; i++)
-    {
-        for (j = 0; j < n - i - 1; j++)
-        {
-            if (processes[j].priority > processes[j + 1].priority)
-            {
-                swap(&processes[j], &processes[j + 1]);
-            }
-        }
-    }
-}
-
+        int id, at, bt, ct, tat, wt, rt,priority;
+} process;
 int main()
 {
-    int i, n;
-    struct Process processes[MAX_PROCESSES];
-    bool done[MAX_PROCESSES] = {false};
-    int current_time = 0;
-    int total_waiting_time = 0;
-    int total_turnaround_time = 0;
-
+    int n, currentTime = 0;
+    float avgTAT, avgWT;
     printf("Enter the number of processes: ");
     scanf("%d", &n);
-
-    for (i = 0; i < n; i++)
+    process a[n];
+    printf("Enter the id,  arrival time and burst time of n processes: \n");
+    for (int i = 0; i < n; i++)
     {
-        printf("Enter the arrival time, burst time and priority of process %d: ", i + 1);
-        scanf("%d %d %d", &processes[i].arrival_time, &processes[i].burst_time, &processes[i].priority);
-        processes[i].pid = i + 1;
-        processes[i].remaining_time = processes[i].burst_time;
+        scanf("%d", &a[i].id);
+        scanf("%d", &a[i].at);
+        scanf("%d", &a[i].bt);
+        scanf("%d", &a[i].priority);
+        a[i].rt = a[i].bt;
     }
-
-    while (true)
+    int completed = 0;
+    int totalWT = 0;
+    int totalTAT = 0;
+    while (completed < n)
     {
-        int min_priority_index = -1;
-        int min_priority = 99999;
-
-        for (i = 0; i < n; i++)
+        int sJob = -1;
+        int sPriority = 99999;
+        for (int i = 0; i < n; i++)
         {
-            if (processes[i].arrival_time <= current_time && !done[i] && processes[i].priority < min_priority && processes[i].remaining_time > 0)
+            if (a[i].at <= currentTime && a[i].priority < sPriority && a[i].rt > 0)
             {
-                min_priority = processes[i].priority;
-                min_priority_index = i;
+                sJob = i;
+                sPriority = a[i].priority;
             }
         }
-        
-        if (min_priority_index == -1)
+        if (sJob == -1)
         {
-            current_time++;
-            continue;
+            currentTime++;
         }
-
-        processes[min_priority_index].remaining_time--;
-        current_time++;
-
-        if (processes[min_priority_index].remaining_time == 0)
+        else
         {
-            done[min_priority_index] = true;
-            int waiting_time = current_time - processes[min_priority_index].burst_time - processes[min_priority_index].arrival_time;
-            total_waiting_time += waiting_time;
-            int turnaround_time = current_time - processes[min_priority_index].arrival_time;
-            total_turnaround_time += turnaround_time;
-        }
-
-        if (done[n - 1])
-        {
-            break;
+            a[sJob].rt--;
+            currentTime++;
+            if (a[sJob].rt == 0)
+            {
+                completed++;
+                a[sJob].ct = currentTime;
+                a[sJob].tat = currentTime - a[sJob].at;
+                a[sJob].wt = a[sJob].tat - a[sJob].bt;
+                totalTAT += a[sJob].tat;
+                totalWT += a[sJob].wt;
+            }
         }
     }
-
-    float average_waiting_time = (float)total_waiting_time / n;
-    float average_turnaround_time = (float)total_turnaround_time / n;
-
-    printf("Average waiting time: %0.2f\n", average_waiting_time);
-    printf("Average turnaround time: %0.2f\n", average_turnaround_time);
-
-    return 0;
+    avgTAT = (float)totalTAT / n;
+    avgWT = (float)totalWT / n;
+    printf("\nID\tAT\tBT\tCT\tTAT\tWT");
+    for (int i = 0; i < n; i++)
+    {
+        printf("\nP%d\t%d\t%d\t%d\t%d\t%d", a[i].id, a[i].at, a[i].bt, a[i].ct, a[i].tat, a[i].wt);
+    }
+    printf("\nAverage Waiting Time = %f", avgWT);
+    printf("\nAverage Turn Around Time = %f\n", avgTAT);
 }
