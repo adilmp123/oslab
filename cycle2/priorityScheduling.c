@@ -55,10 +55,10 @@ int main()
     }
     avgTAT = (float)totalTAT / n;
     avgWT = (float)totalWT / n;
-    printf("\nID\tAT\tBT\tCT\tTAT\tWT");
+    printf("\nID\tAT\tBT\tPrio\tCT\tTAT\tWT");
     for (int i = 0; i < n; i++)
     {
-        printf("\nP%d\t%d\t%d\t%d\t%d\t%d", a[i].id, a[i].at, a[i].bt, a[i].ct, a[i].tat, a[i].wt);
+        printf("\nP%d\t%d\t%d\t%d\t%d\t%d\t%d", a[i].id, a[i].at, a[i].bt, a[i].priority, a[i].ct, a[i].tat, a[i].wt);
     }
     printf("\nAverage Waiting Time = %f", avgWT);
     printf("\nAverage Turn Around Time = %f\n", avgTAT);
